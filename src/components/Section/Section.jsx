@@ -19,36 +19,45 @@ function Section({
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
+  console.log('=== SECTION DEBUG ===');
+  console.log('Title:', title);
+  console.log('showCollapse:', showCollapse);
+  console.log('type:', type);
+  console.log('data length:', data.length);
+  console.log('isCollapsed:', isCollapsed);
+  console.log('loading:', loading);
+  console.log('====================');
+
   useEffect(() => {
-    const fetchData = async () => {
-      try {
-        setLoading(true);
-        setError(null);
-
-        console.log(`Fetching ${type} from: ${apiEndpoint}`);
-
-        // Fetch main data
-        const response = await axios.get(apiEndpoint);
-        console.log(`Received ${response.data.length} ${type}`);
-        setData(response.data);
-
-        // Fetch genres if it's a songs section
-        if (type === "songs" && genresEndpoint) {
-          console.log("Fetching genres from:", genresEndpoint);
-          const genresResponse = await axios.get(genresEndpoint);
-          console.log("Received genres:", genresResponse.data.data);
-          setGenres(genresResponse.data.data);
-        }
-      } catch (error) {
-        console.error("Error fetching data:", error);
-        setError(`Failed to load ${type}`);
-      } finally {
-        setLoading(false);
+  const fetchData = async () => {
+    try {
+      setLoading(true);
+      setError(null);
+      
+      console.log(`🔍 Fetching ${title} from: ${apiEndpoint}`);
+      
+      const response = await axios.get(apiEndpoint);
+      console.log(`✅ ${title}: Received ${response.data.length} items`);
+      setData(response.data);
+      
+      if (type === "songs" && genresEndpoint) {
+        console.log(`🔍 Fetching genres from: ${genresEndpoint}`);
+        const genresResponse = await axios.get(genresEndpoint);
+        console.log(`✅ Received genres:`, genresResponse.data.data);
+        setGenres(genresResponse.data.data);
       }
-    };
+      
+    } catch (error) {
+      console.error(`❌ Error fetching ${title}:`, error);
+      console.error(`❌ Failed URL: ${apiEndpoint}`);
+      setError(`Failed to load ${title}. Please check the API endpoint.`);
+    } finally {
+      setLoading(false);
+    }
+  };
 
-    fetchData();
-  }, [apiEndpoint, type, genresEndpoint]);
+  fetchData();
+}, [apiEndpoint, type, genresEndpoint, title]);
 
   const handleGenreChange = (event, newValue) => {
     setSelectedGenre(newValue);
