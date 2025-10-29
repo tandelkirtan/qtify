@@ -11,7 +11,7 @@ function Navbar() {
         <Logo />
       </Link>
       <Search placeholder="Search a song of your choice" />
-      <Button
+      {/* <Button
         style={{
           backgroundColor: "black",
           color: "#90EE90", // Light green
@@ -21,7 +21,19 @@ function Navbar() {
         }}
       >
         Give Feedback
-      </Button>
+      </Button> */}
+      <Button
+  style={{
+    backgroundColor: "black",
+    color: "#90EE90",
+    border: "none",
+    fontWeight: "bold",
+    whiteSpace: "nowrap",
+    fontFamily: "'Poppins', sans-serif", // Explicitly set
+  }}
+>
+  Give Feedback
+</Button>
     </nav>
   );
 }
