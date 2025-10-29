@@ -1,6 +1,5 @@
 import React from 'react';
 import Section from '../components/Section/Section';
-import SongsSection from '../components/SongsSection/SongsSection';
 import Hero from '../components/Hero/Hero';
 import Navbar from '../components/Navbar/Navbar';
 import styles from './Home.module.css';
