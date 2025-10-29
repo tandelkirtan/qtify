@@ -1,88 +1,3 @@
-// import React, { useState, useEffect } from 'react';
-// import axios from 'axios';
-// import Card from '../Card/Card';
-// import Carousel from '../Carousel/Carousel';
-// import styles from './Section.module.css';
-
-// function Section({ title, apiEndpoint, showCollapse = true }) {
-//   const [albums, setAlbums] = useState([]);
-//   const [isCollapsed, setIsCollapsed] = useState(false);
-//   const [loading, setLoading] = useState(true);
-//   const [error, setError] = useState(null);
-
-//   useEffect(() => {
-//     const fetchAlbums = async () => {
-//       try {
-//         setLoading(true);
-//         const response = await axios.get(apiEndpoint);
-//         setAlbums(response.data);
-//         setError(null);
-//       } catch (error) {
-//         console.error('Error fetching albums:', error);
-//         setError('Failed to load albums');
-//       } finally {
-//         setLoading(false);
-//       }
-//     };
-
-//     fetchAlbums();
-//   }, [apiEndpoint]);
-
-//   const toggleCollapse = () => {
-//     setIsCollapsed(!isCollapsed);
-//   };
-
-//   if (loading) {
-//     return (
-//       <div className={styles.section}>
-//         <div className={styles.sectionHeader}>
-//           <h2 className={styles.sectionTitle}>{title}</h2>
-//         </div>
-//         <div className={styles.loading}>Loading...</div>
-//       </div>
-//     );
-//   }
-
-//   if (error) {
-//     return (
-//       <div className={styles.section}>
-//         <div className={styles.sectionHeader}>
-//           <h2 className={styles.sectionTitle}>{title}</h2>
-//         </div>
-//         <div className={styles.error}>{error}</div>
-//       </div>
-//     );
-//   }
-
-//   return (
-//     <div className={styles.section}>
-//       <div className={styles.sectionHeader}>
-//         <h2 className={styles.sectionTitle}>{title}</h2>
-//         {showCollapse && (
-//           <button className={styles.collapseButton} onClick={toggleCollapse}>
-//             {isCollapsed ? 'Show All' : 'Collapse'}
-//           </button>
-//         )}
-//       </div>
-      
-//       {isCollapsed ? (
-//         <Carousel 
-//           data={albums}
-//           renderComponent={(album) => <Card album={album} />}
-//         />
-//       ) : (
-//         <div className={styles.cardsGrid}>
-//           {albums.map((album) => (
-//             <Card key={album.id} album={album} />
-//           ))}
-//         </div>
-//       )}
-//     </div>
-//   );
-// }
-
-// export default Section;
-
 import React, { useState, useEffect } from 'react';
 import { Tab, Tabs } from '@mui/material';
 import axios from 'axios';
@@ -102,24 +17,32 @@ function Section({
   const [selectedGenre, setSelectedGenre] = useState('All');
   const [isCollapsed, setIsCollapsed] = useState(false);
   const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
 
   useEffect(() => {
     const fetchData = async () => {
       try {
         setLoading(true);
+        setError(null);
+        
+        console.log(`Fetching ${type} from: ${apiEndpoint}`);
         
         // Fetch main data
         const response = await axios.get(apiEndpoint);
+        console.log(`Received ${response.data.length} ${type}`);
         setData(response.data);
         
         // Fetch genres if it's a songs section
         if (type === "songs" && genresEndpoint) {
+          console.log('Fetching genres from:', genresEndpoint);
           const genresResponse = await axios.get(genresEndpoint);
+          console.log('Received genres:', genresResponse.data.data);
           setGenres(genresResponse.data.data);
         }
         
       } catch (error) {
         console.error('Error fetching data:', error);
+        setError(`Failed to load ${type}`);
       } finally {
         setLoading(false);
       }
@@ -141,23 +64,48 @@ function Section({
     setIsCollapsed(!isCollapsed);
   };
 
+  console.log('Section debug:', { 
+    title, 
+    showCollapse, 
+    type, 
+    isCollapsed, 
+    dataLength: data.length,
+    loading,
+    error
+  });
+
   if (loading) {
     return (
       <div className={styles.section}>
         <div className={styles.sectionHeader}>
           <h2 className={styles.sectionTitle}>{title}</h2>
         </div>
-        <div className={styles.loading}>Loading...</div>
+        <div className={styles.loading}>Loading {type}...</div>
+      </div>
+    );
+  }
+
+  if (error) {
+    return (
+      <div className={styles.section}>
+        <div className={styles.sectionHeader}>
+          <h2 className={styles.sectionTitle}>{title}</h2>
+        </div>
+        <div className={styles.error}>{error}</div>
       </div>
     );
   }
 
   return (
-    <div className={styles.section}>
+    <div className={styles.section} data-testid={`${title.toLowerCase().replace(' ', '-')}-section`}>
       <div className={styles.sectionHeader}>
         <h2 className={styles.sectionTitle}>{title}</h2>
-        {showCollapse && type !== "songs" && (
-          <button className={styles.collapseButton} onClick={toggleCollapse}>
+        {showCollapse && type !== "songs" && data.length > 0 && (
+          <button 
+            className={styles.collapseButton} 
+            onClick={toggleCollapse}
+            data-testid={`${title.toLowerCase().replace(' ', '-')}-collapse-btn`}
+          >
             {isCollapsed ? 'Show All' : 'Collapse'}
           </button>
         )}

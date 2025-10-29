@@ -6,7 +6,7 @@ function Card({ data, type = "album" }) {
   if (!data) return null;
 
   // Determine if it's a song or album
-  const isSong = type === "song";
+  const isSong = type === "song" || type === "songs";
 
   return (
     <div className={styles.card}>

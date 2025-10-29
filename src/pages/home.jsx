@@ -10,6 +10,7 @@ function Home() {
       <Navbar />
       <Hero />
       
+      {/* Top Albums Section */}
       <Section 
         title="Top Albums"
         apiEndpoint="https://qtify-backend.labs.crio.do/albums/top"
@@ -17,6 +18,7 @@ function Home() {
         type="albums"
       />
       
+      {/* New Albums Section */}
       <Section 
         title="New Albums"
         apiEndpoint="https://qtify-backend.labs.crio.do/albums/new"
@@ -24,6 +26,7 @@ function Home() {
         type="albums"
       />
 
+      {/* Songs Section */}
       <Section 
         title="Songs"
         apiEndpoint="https://qtify-backend.labs.crio.do/songs"
