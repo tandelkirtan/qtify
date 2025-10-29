@@ -14,6 +14,11 @@ function Home() {
         apiEndpoint="https://qtify-backend.labs.crio.do/albums/top"
         showCollapse={true}
       />
+      <Section 
+        title="New Albums"
+        apiEndpoint="https://qtify-backend.labs.crio.do/albums/new"
+        showCollapse={true}
+      />
     </div>
   );
 }

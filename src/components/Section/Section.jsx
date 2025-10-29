@@ -3,7 +3,7 @@ import axios from 'axios';
 import Card from '../Card/Card';
 import styles from './Section.module.css';
 
-function Section({apiEndpoint, showCollapse = true }) {
+function Section({title, apiEndpoint, showCollapse = true }) {
   const [albums, setAlbums] = useState([]);
   const [isCollapsed, setIsCollapsed] = useState(false);
 
@@ -30,7 +30,7 @@ function Section({apiEndpoint, showCollapse = true }) {
   return (
     <div className={styles.section}>
       <div className={styles.sectionHeader}>
-        <h2 className={styles.sectionTitle}>Top Albums</h2>
+        <h2 className={styles.sectionTitle}>{title}</h2>
         {showCollapse && (
           <button className={styles.collapseButton} onClick={toggleCollapse}>
             {isCollapsed ? 'Show All' : 'Collapse'}

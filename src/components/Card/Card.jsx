@@ -51,11 +51,6 @@ function Card({ album }) {
           className={styles.cardImage}
         />
         <div className={styles.chipContainer}>
-            {/* <Chip 
-              label={`${album.follows} Follows`}
-              size="small"
-              className={styles.followChip}
-            /> */}
         </div>
       </div>
       
