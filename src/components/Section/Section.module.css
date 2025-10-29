@@ -1,58 +1,4 @@
 /* .section {
-  padding: 32px 32px 32px 32px;
-  background: black;
-  border-bottom: 2px solid greenyellow;
-}
-
-.sectionHeader {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 24px;
-}
-
-.sectionTitle {
-  font-size: 20px;
-  font-weight: 600;
-  color: white;
-  margin: 0;
-}
-
-.collapseButton {
-  background: transparent;
-  border: none;
-  color: white;
-  font-size: 14px;
-  font-weight: 500;
-  cursor: pointer;
-  padding: 8px 16px;
-  border-radius: 4px;
-  transition: background-color 0.2s;
-}
-
-.collapseButton:hover {
-  background-color: rgba(255, 255, 255, 0.1);
-}
-
-.cardsGrid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(159px, 1fr));
-  gap: 24px;
-  justify-content: center;
-}
-
-@media (max-width: 768px) {
-  .section {
-    padding: 0 16px;
-  }
-  
-  .cardsGrid {
-    grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
-    gap: 16px;
-  }
-} */
-
-.section {
   margin: 40px 0;
   padding: 0 32px;
 }
@@ -100,6 +46,110 @@
   padding: 40px 0;
 }
 
+@media (max-width: 768px) {
+  .section {
+    padding: 0 16px;
+  }
+  
+  .cardsGrid {
+    grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+    gap: 16px;
+  }
+} */
+
+
+.section {
+  margin: 40px 0;
+  padding: 0 32px;
+  width: 100%;
+}
+
+.sectionHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 24px;
+  width: 100%;
+}
+
+.sectionTitle {
+  font-size: 20px;
+  font-weight: 600;
+  color: var(--color-white);
+  margin: 0;
+}
+
+.collapseButton {
+  background: transparent;
+  border: 1px solid var(--color-primary);
+  color: var(--color-primary);
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  padding: 10px 20px;
+  border-radius: 12px;
+  transition: all 0.3s ease;
+  display: block;
+  visibility: visible;
+  opacity: 1;
+  min-width: 120px;
+  text-align: center;
+}
+
+.collapseButton:hover {
+  background-color: var(--color-primary);
+  color: var(--color-black);
+}
+
+/* Tabs styling for Songs section */
+.tabsContainer {
+  margin-bottom: 24px;
+}
+
+.tabs {
+  min-height: 40px;
+}
+
+.tab {
+  color: var(--color-white) !important;
+  text-transform: none !important;
+  font-size: 16px !important;
+  font-weight: 400 !important;
+  min-height: 40px !important;
+  padding: 8px 20px !important;
+  border-radius: 20px !important;
+  margin-right: 8px !important;
+  border: 1px solid var(--color-white) !important;
+  opacity: 1 !important;
+  transition: all 0.3s ease !important;
+}
+
+.tab:hover {
+  background-color: rgba(255, 255, 255, 0.1) !important;
+}
+
+.activeTab {
+  background-color: var(--color-primary) !important;
+  color: var(--color-black) !important;
+  border-color: var(--color-primary) !important;
+  font-weight: 600 !important;
+}
+
+/* Cards Grid */
+.cardsGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(159px, 1fr));
+  gap: 24px;
+  justify-content: center;
+}
+
+.loading, .error {
+  text-align: center;
+  color: var(--color-white);
+  padding: 40px 0;
+  font-size: 16px;
+}
+
 /* Responsive design */
 @media (max-width: 768px) {
   .section {
@@ -109,5 +159,11 @@
   .cardsGrid {
     grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
     gap: 16px;
+  }
+  
+  .collapseButton {
+    padding: 8px 16px;
+    font-size: 14px;
+    min-width: 100px;
   }
 }
