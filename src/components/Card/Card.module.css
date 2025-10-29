@@ -1,0 +1,72 @@
+
+.card {
+  width: 159px;
+  height: 232px;
+  border-radius: 10px;
+  overflow: hidden;
+  background: white;
+  display: flex;
+  flex-direction: column;
+  cursor: pointer;
+  transition: transform 0.2s ease;
+  border: 2px solid rgb(255, 255, 255);
+}
+
+.card:hover {
+  transform: translateY(-4px);
+}
+
+.cardImageContainer {
+  position: relative;
+  height: 170px;
+  width: 100%;
+  background: var(--color-black);
+  overflow: hidden;
+}
+
+.cardImage {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 10px 10px 0 0;
+}
+
+.chipContainer {
+  position: absolute;
+  top: 8px;
+  left: 8px;
+}
+
+.followChip {
+  background-color: var(--color-black) !important;
+  color: var(--color-white) !important;
+  font-size: 10px !important;
+  font-weight: 400 !important;
+  height: 23px !important;
+  border-radius: 10px !important;
+  padding: 4px 8px !important;
+}
+
+.followChip .MuiChip-label {
+  padding: 0 4px !important;
+  font-size: 10px !important;
+  font-weight: 400 !important;
+}
+
+.follodiv
+{
+  background-color: black;
+  width: fit-content;
+  color: white;
+  margin: 10px;
+  padding: 3px 10px;
+  border-radius: 8px;
+  font-size: 12px;
+}
+
+.albumTitle {
+  /* border: 2px solid rgb(13, 0, 255); */
+  margin: 0;
+  font-size: 16px;
+  font-weight: 700;
+}
