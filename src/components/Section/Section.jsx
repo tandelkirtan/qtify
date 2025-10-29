@@ -1,20 +1,20 @@
-import React, { useState, useEffect } from 'react';
-import { Tab, Tabs } from '@mui/material';
-import axios from 'axios';
-import Card from '../Card/Card';
-import Carousel from '../Carousel/Carousel';
-import styles from './Section.module.css';
+import React, { useState, useEffect } from "react";
+import { Tab, Tabs } from "@mui/material";
+import axios from "axios";
+import Card from "../Card/Card";
+import Carousel from "../Carousel/Carousel";
+import styles from "./Section.module.css";
 
-function Section({ 
-  title, 
-  apiEndpoint, 
-  showCollapse = true, 
+function Section({
+  title,
+  apiEndpoint,
+  showCollapse = true,
   type = "albums",
-  genresEndpoint 
+  genresEndpoint,
 }) {
   const [data, setData] = useState([]);
   const [genres, setGenres] = useState([]);
-  const [selectedGenre, setSelectedGenre] = useState('All');
+  const [selectedGenre, setSelectedGenre] = useState("All");
   const [isCollapsed, setIsCollapsed] = useState(false);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -24,24 +24,23 @@ function Section({
       try {
         setLoading(true);
         setError(null);
-        
+
         console.log(`Fetching ${type} from: ${apiEndpoint}`);
-        
+
         // Fetch main data
         const response = await axios.get(apiEndpoint);
         console.log(`Received ${response.data.length} ${type}`);
         setData(response.data);
-        
+
         // Fetch genres if it's a songs section
         if (type === "songs" && genresEndpoint) {
-          console.log('Fetching genres from:', genresEndpoint);
+          console.log("Fetching genres from:", genresEndpoint);
           const genresResponse = await axios.get(genresEndpoint);
-          console.log('Received genres:', genresResponse.data.data);
+          console.log("Received genres:", genresResponse.data.data);
           setGenres(genresResponse.data.data);
         }
-        
       } catch (error) {
-        console.error('Error fetching data:', error);
+        console.error("Error fetching data:", error);
         setError(`Failed to load ${type}`);
       } finally {
         setLoading(false);
@@ -56,22 +55,23 @@ function Section({
   };
 
   // Filter songs based on selected genre
-  const filteredData = type === "songs" && selectedGenre !== 'All' 
-    ? data.filter(item => item.genre?.label === selectedGenre)
-    : data;
+  const filteredData =
+    type === "songs" && selectedGenre !== "All"
+      ? data.filter((item) => item.genre?.label === selectedGenre)
+      : data;
 
   const toggleCollapse = () => {
     setIsCollapsed(!isCollapsed);
   };
 
-  console.log('Section debug:', { 
-    title, 
-    showCollapse, 
-    type, 
-    isCollapsed, 
+  console.log("Section debug:", {
+    title,
+    showCollapse,
+    type,
+    isCollapsed,
     dataLength: data.length,
     loading,
-    error
+    error,
   });
 
   if (loading) {
@@ -97,16 +97,22 @@ function Section({
   }
 
   return (
-    <div className={styles.section} data-testid={`${title.toLowerCase().replace(' ', '-')}-section`}>
+    <div
+      className={styles.section}
+      data-testid={`${title.toLowerCase().replace(" ", "-")}-section`}
+    >
       <div className={styles.sectionHeader}>
         <h2 className={styles.sectionTitle}>{title}</h2>
         {showCollapse && type !== "songs" && data.length > 0 && (
-          <button 
-            className={styles.collapseButton} 
+                <button
+            className={styles.collapseButton}
             onClick={toggleCollapse}
-            data-testid={`${title.toLowerCase().replace(' ', '-')}-collapse-btn`}
+            data-testid={`${title
+              .toLowerCase()
+              .replace(" ", "-")}-collapse-btn`}
+            style={{ display: "block", visibility: "visible", opacity: 1 }}
           >
-            {isCollapsed ? 'Show All' : 'Collapse'}
+            {isCollapsed ? "Show All" : "Collapse"}
           </button>
         )}
       </div>
@@ -118,19 +124,23 @@ function Section({
             value={selectedGenre}
             onChange={handleGenreChange}
             className={styles.tabs}
-            TabIndicatorProps={{ style: { display: 'none' } }}
+            TabIndicatorProps={{ style: { display: "none" } }}
           >
-            <Tab 
-              value="All" 
-              label="All" 
-              className={`${styles.tab} ${selectedGenre === 'All' ? styles.activeTab : ''}`}
+            <Tab
+              value="All"
+              label="All"
+              className={`${styles.tab} ${
+                selectedGenre === "All" ? styles.activeTab : ""
+              }`}
             />
             {genres.map((genre) => (
               <Tab
                 key={genre.key}
                 value={genre.label}
                 label={genre.label}
-                className={`${styles.tab} ${selectedGenre === genre.label ? styles.activeTab : ''}`}
+                className={`${styles.tab} ${
+                  selectedGenre === genre.label ? styles.activeTab : ""
+                }`}
               />
             ))}
           </Tabs>
@@ -139,23 +149,14 @@ function Section({
 
       {/* Content */}
       {type === "songs" || isCollapsed ? (
-        <Carousel 
+        <Carousel
           data={filteredData}
-          renderComponent={(item) => (
-            <Card 
-              data={item}
-              type={type}
-            />
-          )}
+          renderComponent={(item) => <Card data={item} type={type} />}
         />
       ) : (
         <div className={styles.cardsGrid}>
           {filteredData.map((item) => (
-            <Card 
-              key={item.id} 
-              data={item}
-              type={type}
-            />
+            <Card key={item.id} data={item} type={type} />
           ))}
         </div>
       )}
