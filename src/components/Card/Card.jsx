@@ -37,7 +37,7 @@
 
 import React from "react";
 import styles from "./Card.module.css";
-import { Chip } from '@mui/material';
+// import { Chip } from '@mui/material';
 
 function Card({ album }) {
   if (!album) return null;
