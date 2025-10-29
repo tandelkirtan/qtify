@@ -1,8 +1,18 @@
-.home {
-  background-color: var(--color-black);
-  min-height: 100vh;
+.songsSection {
+  margin: 40px 0;
+  padding: 0 32px;
 }
-/* Add these to your existing Section.module.css */
+
+.sectionHeader {
+  margin-bottom: 24px;
+}
+
+.sectionTitle {
+  font-size: 20px;
+  font-weight: 600;
+  color: var(--color-white);
+  margin: 0;
+}
 
 .tabsContainer {
   margin-bottom: 24px;
@@ -35,4 +45,23 @@
   color: var(--color-black) !important;
   border-color: var(--color-primary) !important;
   font-weight: 600 !important;
+}
+
+.loading {
+  text-align: center;
+  color: var(--color-white);
+  padding: 40px 0;
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
+  .songsSection {
+    padding: 0 16px;
+  }
+  
+  .tab {
+    font-size: 14px !important;
+    padding: 6px 16px !important;
+    margin-right: 6px !important;
+  }
 }
