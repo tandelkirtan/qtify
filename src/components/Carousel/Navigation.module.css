@@ -1,0 +1,35 @@
+.navigationButton {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 10;
+  cursor: pointer;
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.leftNavigation {
+  left: 0;
+}
+
+.rightNavigation {
+  right: 0;
+}
+
+.navigationButton:hover circle {
+  fill: #34C94B;
+}
+
+.navigationButton:hover path {
+  stroke: white;
+}
+
+/* Hide navigation on small screens */
+@media (max-width: 480px) {
+  .navigationButton {
+    display: none;
+  }
+}
