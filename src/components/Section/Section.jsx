@@ -175,7 +175,6 @@
 
 // export default Section;
 
-
 import React, { useState, useEffect } from "react";
 import { Tab, Tabs } from "@mui/material";
 import axios from "axios";
@@ -291,8 +290,8 @@ function Section({
           <button
             className={styles.collapseButton}
             onClick={toggleCollapse}
-            data-testid={`${title.toLowerCase().replace(" ", "-")}-button`}
-            id={`${title.toLowerCase().replace(" ", "-")}-button`}
+            data-testid={`${title.toLowerCase().replace(" ", "-")}-collapse-btn`}
+            id={`${title.toLowerCase().replace(" ", "-")}-collapse-btn`}
           >
             {isCollapsed ? "Show All" : "Collapse"}
           </button>
