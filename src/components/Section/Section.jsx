@@ -366,7 +366,7 @@ function Section({
   const [data, setData] = useState([]);
   const [genres, setGenres] = useState([]);
   const [selectedGenre, setSelectedGenre] = useState("All");
-  const [showAll, setShowAll] = useState(false); // Renamed for clarity
+  const [isCollapsed, setIsCollapsed] = useState(false);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
@@ -411,29 +411,25 @@ function Section({
       ? data.filter((item) => item.genre?.label === selectedGenre)
       : data;
 
-  const toggleShowAll = () => {
-    console.log(
-      `🔄 Toggling ${title} from ${showAll ? "show all" : "show limited"} to ${
-        !showAll ? "show limited" : "show all"
-      }`
-    );
-    setShowAll(!showAll);
+  const toggleCollapse = () => {
+    console.log(`🔄 Toggling ${title} from ${isCollapsed ? 'collapsed' : 'expanded'} to ${!isCollapsed ? 'collapsed' : 'expanded'}`);
+    setIsCollapsed(!isCollapsed);
   };
 
-  // Determine which data to display based on showAll state
-  const displayData = showAll ? filteredData : filteredData.slice(0, 6);
+  // Determine which data to display when not collapsed (show limited grid)
+  const displayData = isCollapsed ? filteredData : filteredData.slice(0, 6);
 
   // Debug logs
   console.log("Section debug:", {
     title,
     showCollapse,
     type,
-    showAll,
+    isCollapsed,
     dataLength: data.length,
     displayDataLength: displayData.length,
     loading,
     error,
-    shouldShowButton: showCollapse && type !== "songs" && data.length > 6,
+    shouldShowButton: showCollapse && type !== "songs" && data.length > 0,
   });
 
   if (loading) {
@@ -466,17 +462,15 @@ function Section({
       <div className={styles.sectionHeader}>
         <h2 className={styles.sectionTitle}>{title}</h2>
 
-        {/* Show Show All/Show Less button for album sections when there are more than 6 items */}
-        {showCollapse && type !== "songs" && data.length > 6 && (
+        {/* Show Collapse/Show All button for album sections */}
+        {showCollapse && type !== "songs" && data.length > 0 && (
           <button
             className={styles.collapseButton}
-            onClick={toggleShowAll}
-            data-testid={`${title
-              .toLowerCase()
-              .replace(/\s+/g, "-")}-show-all-btn`}
-            id={`${title.toLowerCase().replace(/\s+/g, "-")}-show-all-btn`}
+            onClick={toggleCollapse}
+            data-testid={`${title.toLowerCase().replace(/\s+/g, "-")}-collapse-btn`}
+            id={`${title.toLowerCase().replace(/\s+/g, "-")}-collapse-btn`}
           >
-            {showAll ? "Show Less" : "Show All"}
+            {isCollapsed ? "Show All" : "Collapse"}
           </button>
         )}
       </div>
@@ -511,8 +505,8 @@ function Section({
         </div>
       )}
 
-      {/* Content - Always use grid for albums, carousel for songs */}
-      {type === "songs" ? (
+      {/* Content - Carousel for songs or collapsed albums, Grid for expanded albums */}
+      {type === "songs" || isCollapsed ? (
         <Carousel
           data={filteredData}
           renderComponent={(item) => <Card data={item} type={type} />}
