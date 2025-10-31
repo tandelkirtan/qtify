@@ -33,20 +33,20 @@
 // //     try {
 // //       setLoading(true);
 // //       setError(null);
-      
+
 // //       console.log(`🔍 Fetching ${title} from: ${apiEndpoint}`);
-      
+
 // //       const response = await axios.get(apiEndpoint);
 // //       console.log(`✅ ${title}: Received ${response.data.length} items`);
 // //       setData(response.data);
-      
+
 // //       if (type === "songs" && genresEndpoint) {
 // //         console.log(`🔍 Fetching genres from: ${genresEndpoint}`);
 // //         const genresResponse = await axios.get(genresEndpoint);
 // //         console.log(`✅ Received genres:`, genresResponse.data.data);
 // //         setGenres(genresResponse.data.data);
 // //       }
-      
+
 // //     } catch (error) {
 // //       console.error(`❌ Error fetching ${title}:`, error);
 // //       console.error(`❌ Failed URL: ${apiEndpoint}`);
@@ -201,20 +201,20 @@
 //       try {
 //         setLoading(true);
 //         setError(null);
-        
+
 //         console.log(`🔍 Fetching ${title} from: ${apiEndpoint}`);
-        
+
 //         const response = await axios.get(apiEndpoint);
 //         console.log(`✅ ${title}: Received ${response.data.length} items`);
 //         setData(response.data);
-        
+
 //         if (type === "songs" && genresEndpoint) {
 //           console.log(`🔍 Fetching genres from: ${genresEndpoint}`);
 //           const genresResponse = await axios.get(genresEndpoint);
 //           console.log(`✅ Received genres:`, genresResponse.data.data);
 //           setGenres(genresResponse.data.data);
 //         }
-        
+
 //       } catch (error) {
 //         console.error(`❌ Error fetching ${title}:`, error);
 //         console.error(`❌ Failed URL: ${apiEndpoint}`);
@@ -284,7 +284,7 @@
 //     >
 //       <div className={styles.sectionHeader}>
 //         <h2 className={styles.sectionTitle}>{title}</h2>
-        
+
 //         {/* Show Collapse/Show All button for album sections */}
 //         {showCollapse && type !== "songs" && data.length > 0 && (
 //           <button
@@ -347,6 +347,8 @@
 
 // export default Section;
 
+// --------------------------------------------
+
 import React, { useState, useEffect } from "react";
 import { Tab, Tabs } from "@mui/material";
 import axios from "axios";
@@ -373,20 +375,20 @@ function Section({
       try {
         setLoading(true);
         setError(null);
-        
+
         console.log(`🔍 Fetching ${title} from: ${apiEndpoint}`);
-        
+
         const response = await axios.get(apiEndpoint);
+        console.log(response);
         console.log(`✅ ${title}: Received ${response.data.length} items`);
         setData(response.data);
-        
+
         if (type === "songs" && genresEndpoint) {
           console.log(`🔍 Fetching genres from: ${genresEndpoint}`);
           const genresResponse = await axios.get(genresEndpoint);
           console.log(`✅ Received genres:`, genresResponse.data.data);
           setGenres(genresResponse.data.data);
         }
-        
       } catch (error) {
         console.error(`❌ Error fetching ${title}:`, error);
         console.error(`❌ Failed URL: ${apiEndpoint}`);
@@ -410,7 +412,11 @@ function Section({
       : data;
 
   const toggleShowAll = () => {
-    console.log(`🔄 Toggling ${title} from ${showAll ? 'show all' : 'show limited'} to ${!showAll ? 'show limited' : 'show all'}`);
+    console.log(
+      `🔄 Toggling ${title} from ${showAll ? "show all" : "show limited"} to ${
+        !showAll ? "show limited" : "show all"
+      }`
+    );
     setShowAll(!showAll);
   };
 
@@ -459,14 +465,16 @@ function Section({
     >
       <div className={styles.sectionHeader}>
         <h2 className={styles.sectionTitle}>{title}</h2>
-        
+
         {/* Show Show All/Show Less button for album sections when there are more than 6 items */}
         {showCollapse && type !== "songs" && data.length > 6 && (
           <button
             className={styles.collapseButton}
             onClick={toggleShowAll}
-            data-testid={`${title.toLowerCase().replace(" ", "-")}-show-all-btn`}
-            id={`${title.toLowerCase().replace(" ", "-")}-show-all-btn`}
+            data-testid={`${title
+              .toLowerCase()
+              .replace(/\s+/g, "-")}-show-all-btn`}
+            id={`${title.toLowerCase().replace(/\s+/g, "-")}-show-all-btn`}
           >
             {showAll ? "Show Less" : "Show All"}
           </button>
